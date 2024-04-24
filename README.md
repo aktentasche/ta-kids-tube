@@ -32,8 +32,9 @@ So I intuitively drifted towards the frontend technology that I know: Vue.js. Fu
 
 ## Tech stack
 
-- Vue.js with pinia for the frontend
-- [drf-yasg](https://github.com/axnsan12/drf-yasg) to obtain an [OpenAPI](https://swagger.io/specification/) definition of the TubeArchivist API
-- [https://github.com/ferdikoomen/openapi-typescript-codegen](openapi-typescript-codegen) to generate Typescript code from the TubeArchivist OpenAPI definition to be used in the Vue.js frontend
-- MQTT broker middleware for remote function calls
+- [Vue.js](https://github.com/vuejs/core) with [vuetify](https://github.com/vuetifyjs/vuetify) and [pinia](https://github.com/vuejs/pinia) for the frontend
+- [drf-spectacular](https://github.com/tfranzel/drf-spectacular) to obtain an [OpenAPI](https://swagger.io/specification/) definition of the TubeArchivist API
+- [openapi-typescript-codegen](https://github.com/ferdikoomen/openapi-typescript-codegen) to generate Typescript code from the TubeArchivist OpenAPI definition to be used in the Vue.js frontend
+- [mosquitto](https://github.com/eclipse/mosquitto) MQTT broker for remote function calls
 - docker compose to run everything
+- VSCode devcontainers for development
