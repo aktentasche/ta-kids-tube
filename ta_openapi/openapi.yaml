@@ -1,0 +1,159 @@
+openapi: 3.0.0
+info:
+  title: TubeArchivist API
+  description: A subset of the TA REST API
+  version: 0.4.7
+servers:
+  - url: http://10.0.0.11:8000/
+    description: Main TA server
+paths:
+  /api/playlist/:
+    get:
+      summary: Returns list of indexed playlists
+      operationId: listPlaylists
+      tags:
+        - Playlist
+      parameters:
+        - name: playlist_type
+          in: query
+          required: false
+          description: Type of playlist to filter by.
+          schema:
+            type: string
+            enum:
+              - regular
+              - custom
+      responses:
+        "200":
+          description: Successfully retrieved list of playlists.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  data:
+                    type: array
+                    items:
+                      type: object
+                      properties:
+                        playlist_id:
+                          type: string
+                        playlist_name:
+                          type: string
+                        playlist_description:
+                          type: boolean
+                        playlist_active:
+                          type: boolean
+                        playlist_channel:
+                          type: string
+                        playlist_channel_id:
+                          type: string
+                        playlist_subscribed:
+                          type: boolean
+                        playlist_thumbnail:
+                          type: string
+                        playlist_last_refresh:
+                          type: string
+                        playlist_type:
+                          type: string
+                        playlist_entries:
+                          type: array
+                          items:
+                            type: object
+                            properties:
+                              youtube_id:
+                                type: string
+                              title:
+                                type: string
+                              uploader:
+                                type: string
+                              idx:
+                                type: integer
+                              downloaded:
+                                type: boolean
+                        _index:
+                          type: string
+                        _score:
+                          type: number
+                  config:
+                    type: object
+                    properties:
+                      enable_cast:
+                        type: boolean
+                      downloads:
+                        type: object
+                        properties:
+                          limit_speed:
+                            type: boolean
+                          sleep_interval:
+                            type: integer
+                          autodelete_days:
+                            type: boolean
+                          format:
+                            type: string
+                          format_sort:
+                            type: boolean
+                          add_metadata:
+                            type: boolean
+                          add_thumbnail:
+                            type: boolean
+                          subtitle:
+                            type: boolean
+                          subtitle_source:
+                            type: boolean
+                          subtitle_index:
+                            type: boolean
+                          comment_max:
+                            type: boolean
+                          comment_sort:
+                            type: string
+                          cookie_import:
+                            type: boolean
+                          throttledratelimit:
+                            type: boolean
+                          extractor_lang:
+                            type: boolean
+                          integrate_ryd:
+                            type: boolean
+                          integrate_sponsorblock:
+                            type: boolean
+                  paginate:
+                    type: object
+                    properties:
+                      page_size:
+                        type: integer
+                      page_from:
+                        type: integer
+                      prev_pages:
+                        type: boolean
+                      current_page:
+                        type: integer
+                      max_hits:
+                        type: boolean
+                      params:
+                        type: string
+                      last_page:
+                        type: boolean
+                      next_pages:
+                        type: array
+                        items:
+                          type: string
+                      total_hits:
+                        type: integer
+        "400":
+          description: Bad request due to invalid parameters.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+security:
+  - TokenAuth: []
+components:
+  securitySchemes:
+    TokenAuth: # Arbitrary name for the security scheme
+      type: apiKey
+      in: header
+      name: Authorization
