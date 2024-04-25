@@ -2,9 +2,6 @@
 
 ta-kids-tube is a video platform designed for kids and their parents. It uses [TubeArchivist](https://github.com/tubearchivist/tubearchivist) as backend for video storage and retrieval.
 
-
-
-
 ## Motivation
 
 [TubeArchivist](https://github.com/tubearchivist/tubearchivist) is a great solution to making YouTube videos available offline using a hassle-free web interface. It also has some very nice features for searching, indexing and subscribing to channels. 
@@ -30,11 +27,40 @@ Even though I am a python guy I have never worked with Django. I took a look at 
 So I intuitively drifted towards the frontend technology that I know: Vue.js. Furthermore some of my wanted features are likely impossible to implement using Django (e.g. remote control).
 
 
-## Tech stack
+# Tech stack
 
 - [Vue.js](https://github.com/vuejs/core) with [vuetify](https://github.com/vuetifyjs/vuetify) and [pinia](https://github.com/vuejs/pinia) for the frontend
-- [drf-spectacular](https://github.com/tfranzel/drf-spectacular) to obtain an [OpenAPI](https://swagger.io/specification/) definition of the TubeArchivist API
-- [openapi-typescript-codegen](https://github.com/ferdikoomen/openapi-typescript-codegen) to generate Typescript code from the TubeArchivist OpenAPI definition to be used in the Vue.js frontend
+- A manually (with chatGPT, duh) created openapi.yaml based on the [TA API](https://docs.tubearchivist.com/api/introduction/)
+- [openapi-typescript-codegen](https://github.com/ferdikoomen/openapi-typescript-codegen) to generate Typescript code from the TubeArchivist [OpenAPI](https://swagger.io/specification/) definition to be used in the Vue.js frontend
 - [mosquitto](https://github.com/eclipse/mosquitto) MQTT broker for remote function calls
 - docker compose to run everything
 - VSCode devcontainers for development
+
+
+# OpenAPI definition
+[ta_openapi.yaml](ta_openapi.yaml) contains a subset of the TA API in the openapi format. It is manually maintained and might break for future version of TA. The version of the OpenAPI definition follows the TA release versions.
+
+## Debug with swagger UI
+
+Prerequisites: Linux with docker installed
+
+1. Replace IP of your main TA instance in [ta_openapi.yaml](ta_openapi.yaml) (under servers)
+2. Add "- DISABLE_CORS=True" to the main TA docker-compose.yaml for the tubearchivist container (note the security implications)
+3. docker compose down-up TA
+4. Start the swagger-ui by running ./run_swagger_ui.sh
+5. Click "Authorize" and insert "Token abcdedf" with abcdedf being your auth token retrieved from the TA UI
+
+
+# Frontend
+
+## Starting the Development Server
+
+To start the development server with hot-reload, run the following command. The server will be accessible at [http://localhost:3000](http://localhost:3000):
+
+```bash
+npm run dev
+```
+
+## Building for Production
+
+TBD
