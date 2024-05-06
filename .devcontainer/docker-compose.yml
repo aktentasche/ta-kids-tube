@@ -1,0 +1,10 @@
+version: "3"
+services:
+  frontend:
+    build:
+      context: ../
+      dockerfile: ./.devcontainer/Dockerfile
+    ports:
+      - "8081:3000"
+    volumes:
+      - "../:/app"

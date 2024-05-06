@@ -1,0 +1,45 @@
+{
+    "name": "frontend",
+    "dockerComposeFile": "docker-compose.yml",
+    "service": "frontend",
+    "workspaceFolder": "/app",
+    "initializeCommand": "echo hi",
+    "postCreateCommand": "npm install",
+    "customizations": {
+        "vscode": {
+            
+            "settings": {
+                "window.title": "frontend",
+                "editor.bracketPairColorization.enabled": true,
+                "editor.guides.bracketPairs": true,
+                "editor.formatOnSave": true,
+                "editor.defaultFormatter": "esbenp.prettier-vscode",
+                "editor.codeActionsOnSave": [
+                    "source.fixAll.eslint"
+                ],
+                "eslint.validate": [
+                    "javascript",
+                    "javascriptreact",
+                    "typescript",   
+                    "vue"
+                ],
+                "typescript.tsdk": "node_modules/typescript/lib",
+                "workbench.colorCustomizations": {
+                    "activityBar.foreground": "#ffffff",
+                    "activityBar.background": "#8a0101",
+                    "activityBar.inactiveForeground": "#c0c0c0",
+                    "panel.border": "#8a0101",
+                    "sideBar.border": "#8a0101",
+                    "tab.border": "#8a0101"
+                },
+            },
+            "extensions": [
+                "vue.volar",
+                "dbaeumer.vscode-eslint",
+                "esbenp.prettier-vscode",
+                "editorconfig.editorconfig",
+                "wayou.vscode-todo-highlight",
+            ]
+        }
+    }
+}
