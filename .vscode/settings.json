@@ -1,0 +1,28 @@
+{
+    "editor.rulers": [
+        88
+    ],
+    "editor.bracketPairColorization.enabled": true,
+    "editor.guides.bracketPairs": true,
+    "editor.formatOnSave": true,
+    "editor.defaultFormatter": "esbenp.prettier-vscode",
+    "editor.codeActionsOnSave": [
+        "source.fixAll.eslint"
+    ],
+    "eslint.validate": [
+        "javascript",
+        "javascriptreact",
+        "typescript",
+        "vue"
+    ],
+    "typescript.tsdk": "node_modules/typescript/lib",
+    "window.title": "frontend",
+    "workbench.colorCustomizations": {
+        "activityBar.foreground": "#ffffff",
+        "activityBar.background": "#8a0101",
+        "activityBar.inactiveForeground": "#c0c0c0",
+        "panel.border": "#8a0101",
+        "sideBar.border": "#8a0101",
+        "tab.border": "#8a0101"
+    }
+}
