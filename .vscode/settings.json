@@ -24,5 +24,11 @@
         "panel.border": "#8a0101",
         "sideBar.border": "#8a0101",
         "tab.border": "#8a0101"
-    }
+    },
+    "[vue]": {
+        "editor.defaultFormatter": "esbenp.prettier-vscode"
+    },
+    "[javascript]": {
+        "editor.defaultFormatter": "esbenp.prettier-vscode"
+    },
 }

@@ -1,10 +1,7 @@
-<template>
-  asd
-</template>
-
+<template>asd</template>
 
 <script lang="ts" setup>
-import { ref } from 'vue';
+import { ref } from "vue";
 
-import {PlaylistService} from "@/ta_openapi"
+import { PlaylistService } from "@/ta_openapi";
 </script>
