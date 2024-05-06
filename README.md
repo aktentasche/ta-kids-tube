@@ -13,12 +13,10 @@ My use case however is very specific and currently not entirely covered by TubeA
 - Countdown timer to stop the video playback (after all, kids should not watch that much TV)
 - Autoplay of the next video in the playlist (see also [tubearchivist#226](https://github.com/tubearchivist/tubearchivist/issues/226))
 - Bulk editing of playlist (for example for downloading a bunch of Peppa Pig Videos using the [browser extension](https://github.com/tubearchivist/browser-extension) and then bulk add them to a Peppa Pig playlist)
-- Remote playback control via browser on different machine than where the video is played
 
 ## Limitations
 
 - This is supposed to be an addition to the TubeArchivist functionality, so downloading, subscribing etc. have to be done in the TubeArchivist frontend
-- Currently only one concurrent playback is supported w.r.t. remote control
 
 ## Why not contribute to TubeArchivist?
 
@@ -26,13 +24,11 @@ Even though I am a python guy I have never worked with Django. I took a look at 
 
 So I intuitively drifted towards the frontend technology that I know: Vue.js. Furthermore some of my wanted features are likely impossible to implement using Django (e.g. remote control).
 
-
 # Tech stack
 
 - [Vue.js](https://github.com/vuejs/core) with [vuetify](https://github.com/vuetifyjs/vuetify) and [pinia](https://github.com/vuejs/pinia) for the frontend
 - A manually (with chatGPT, duh) created openapi.yaml based on the [TA API](https://docs.tubearchivist.com/api/introduction/)
 - [openapi-typescript-codegen](https://github.com/ferdikoomen/openapi-typescript-codegen) to generate Typescript code from the TubeArchivist [OpenAPI](https://swagger.io/specification/) definition to be used in the Vue.js frontend
-- [mosquitto](https://github.com/eclipse/mosquitto) MQTT broker for remote function calls
 - docker compose to run everything
 - VSCode devcontainers for development
 
@@ -51,16 +47,11 @@ Prerequisites: Linux with docker installed
 5. Click "Authorize" and insert "Token abcdedf" with abcdedf being your auth token retrieved from the TA UI
 
 
-# Frontend
+# Development
+Get VScode with dev containers extension then re-open this repo as dev container. 
+Run the task "npm run dev" to start the Vue dev server.
 
-## Starting the Development Server
 
-To start the development server with hot-reload, run the following command. The server will be accessible at [http://localhost:3000](http://localhost:3000):
-
-```bash
-npm run dev
-```
-
-## Building for Production
+# Deploy
 
 TBD
