@@ -3,7 +3,6 @@
 /* tslint:disable */
 /* eslint-disable */
 import type { ApiRequestOptions } from "./ApiRequestOptions";
-import "dotenv/config";
 
 type Resolver<T> = (options: ApiRequestOptions) => Promise<T>;
 type Headers = Record<string, string>;
@@ -21,11 +20,11 @@ export type OpenAPIConfig = {
 };
 
 const auth_header: Headers = {
-  Authorization: `Token ${process.env.API_TOKEN}`,
+  Authorization: `Token ${import.meta.env.VITE_TA_API_TOKEN}`,
 };
 
 export const OpenAPI: OpenAPIConfig = {
-  BASE: process.env.API_BASE_URL,
+  BASE: import.meta.env.VITE_TA_API_BASE_URL,
   VERSION: "0.4.7",
   WITH_CREDENTIALS: false,
   CREDENTIALS: "include",

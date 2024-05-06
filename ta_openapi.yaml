@@ -3,9 +3,6 @@ info:
   title: TubeArchivist API
   description: A subset of the TA REST API
   version: 0.4.7
-servers:
-  - url: http://10.0.0.11:8000/
-    description: Main TA server
 paths:
   /api/playlist/:
     get:
