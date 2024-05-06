@@ -5,6 +5,6 @@ services:
       context: ../
       dockerfile: ./.devcontainer/Dockerfile
     ports:
-      - "8081:3000"
+      - "8787:3000"
     volumes:
       - "../:/app"

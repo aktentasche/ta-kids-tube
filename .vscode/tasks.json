@@ -1,0 +1,25 @@
+{
+    "version": "2.0.0",
+    "tasks": [
+        {
+            "label": "npm run dev",
+            "type": "shell",
+            "command": "npm",
+            "args": [
+                "run",
+                "dev"
+            ]
+        },
+        {
+            "label": "openapi generate",
+            "type": "shell",
+            "command": "openapi",
+            "args": [
+                "--input",
+                "${workspaceFolder}/ta_openapi.yaml",
+                "--output",
+                "${workspaceFolder}/src/ta_openapi"
+            ],
+        },
+    ]
+}
