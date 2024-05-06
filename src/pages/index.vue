@@ -1,7 +1,7 @@
 <template>
-  <HelloWorld />
+  <PlaylistTest />
 </template>
 
 <script lang="ts" setup>
-  //
+//
 </script>

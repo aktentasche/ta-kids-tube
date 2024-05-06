@@ -2,31 +2,36 @@
 /* istanbul ignore file */
 /* tslint:disable */
 /* eslint-disable */
-import type { ApiRequestOptions } from './ApiRequestOptions';
+import type { ApiRequestOptions } from "./ApiRequestOptions";
+import "dotenv/config";
 
 type Resolver<T> = (options: ApiRequestOptions) => Promise<T>;
 type Headers = Record<string, string>;
 
 export type OpenAPIConfig = {
-    BASE: string;
-    VERSION: string;
-    WITH_CREDENTIALS: boolean;
-    CREDENTIALS: 'include' | 'omit' | 'same-origin';
-    TOKEN?: string | Resolver<string> | undefined;
-    USERNAME?: string | Resolver<string> | undefined;
-    PASSWORD?: string | Resolver<string> | undefined;
-    HEADERS?: Headers | Resolver<Headers> | undefined;
-    ENCODE_PATH?: ((path: string) => string) | undefined;
+  BASE: string;
+  VERSION: string;
+  WITH_CREDENTIALS: boolean;
+  CREDENTIALS: "include" | "omit" | "same-origin";
+  TOKEN?: string | Resolver<string> | undefined;
+  USERNAME?: string | Resolver<string> | undefined;
+  PASSWORD?: string | Resolver<string> | undefined;
+  HEADERS?: Headers | Resolver<Headers> | undefined;
+  ENCODE_PATH?: ((path: string) => string) | undefined;
+};
+
+const auth_header: Headers = {
+  Authorization: `Token ${process.env.API_TOKEN}`,
 };
 
 export const OpenAPI: OpenAPIConfig = {
-    BASE: 'http://10.0.0.11:8000',
-    VERSION: '0.4.7',
-    WITH_CREDENTIALS: false,
-    CREDENTIALS: 'include',
-    TOKEN: undefined,
-    USERNAME: undefined,
-    PASSWORD: undefined,
-    HEADERS: undefined,
-    ENCODE_PATH: undefined,
+  BASE: process.env.API_BASE_URL,
+  VERSION: "0.4.7",
+  WITH_CREDENTIALS: false,
+  CREDENTIALS: "include",
+  TOKEN: undefined,
+  USERNAME: undefined,
+  PASSWORD: undefined,
+  HEADERS: auth_header,
+  ENCODE_PATH: undefined,
 };

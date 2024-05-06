@@ -18,7 +18,8 @@
     "types": [
       "vite/client",
       "vite-plugin-vue-layouts/client",
-      "unplugin-vue-router/client"
+      "unplugin-vue-router/client",
+      "node"
     ],
     "allowJs": true,
     "strict": true,
@@ -30,7 +31,9 @@
     "skipLibCheck": true
   },
   "include": [
-    "./src/typed-router.d.ts"
+    "./src/typed-router.d.ts",
+    "./src/**/*.ts",
+    "./src/**/*.vue"
   ],
   "exclude": [
     "dist",
