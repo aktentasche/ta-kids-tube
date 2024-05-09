@@ -16,7 +16,7 @@
             "command": "openapi",
             "args": [
                 "--input",
-                "${workspaceFolder}/ta_openapi.yaml",
+                "${workspaceFolder}/openapi.yaml",
                 "--output",
                 "${workspaceFolder}/src/ta_openapi"
             ],
