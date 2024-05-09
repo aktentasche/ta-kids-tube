@@ -13,11 +13,7 @@
         views.VideoProgressView.as_view(),
         name="api-video-progress",
     ),
-    path(
-        "video/<slug:video_id>/comment/",
-        views.VideoCommentView.as_view(),
-        name="api-video-comment",
-    ),
+
 
 class ApiBaseView(APIView):
     """base view to inherit from"""
@@ -81,7 +77,6 @@ class ApiBaseView(APIView):
             )
             self.response["paginate"] = self.pagination_handler.pagination
 
-
 class VideoApiView(ApiBaseView):
     """resolves to /api/video/<video_id>/
     GET: returns metadata dict of video
@@ -109,7 +104,6 @@ class VideoApiView(ApiBaseView):
             message.update({"state": "not found"})
 
         return Response(message, status=status_code)
-
 
 class VideoApiListView(ApiBaseView):
     """resolves to /api/video/
@@ -161,6 +155,12 @@ class VideoProgressView(ApiBaseView):
 
         return Response(self.response)
 
+
+# path(
+#     "video/<slug:video_id>/comment/",
+#     views.VideoCommentView.as_view(),
+#     name="api-video-comment",
+# ),
 
 
 # path(

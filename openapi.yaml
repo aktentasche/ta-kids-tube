@@ -4,25 +4,15 @@ info:
   description: A subset of the TA REST API
   version: 0.4.7
 paths:
-  /api/playlist/:
+  /api/video/:
     get:
-      summary: Returns list of indexed playlists
-      operationId: listPlaylists
+      summary: Retrieve a list of videos
+      operationId: listVideos
       tags:
-        - Playlist
-      parameters:
-        - name: playlist_type
-          in: query
-          required: false
-          description: Type of playlist to filter by.
-          schema:
-            type: string
-            enum:
-              - regular
-              - custom
+        - Video
       responses:
         "200":
-          description: Successfully retrieved list of playlists.
+          description: A list of videos successfully retrieved.
           content:
             application/json:
               schema:
@@ -31,121 +21,104 @@ paths:
                   data:
                     type: array
                     items:
-                      type: object
-                      properties:
-                        playlist_id:
-                          type: string
-                        playlist_name:
-                          type: string
-                        playlist_description:
-                          type: boolean
-                        playlist_active:
-                          type: boolean
-                        playlist_channel:
-                          type: string
-                        playlist_channel_id:
-                          type: string
-                        playlist_subscribed:
-                          type: boolean
-                        playlist_thumbnail:
-                          type: string
-                        playlist_last_refresh:
-                          type: string
-                        playlist_type:
-                          type: string
-                        playlist_entries:
-                          type: array
-                          items:
-                            type: object
-                            properties:
-                              youtube_id:
-                                type: string
-                              title:
-                                type: string
-                              uploader:
-                                type: string
-                              idx:
-                                type: integer
-                              downloaded:
-                                type: boolean
-                        _index:
-                          type: string
-                        _score:
-                          type: number
-                  config:
-                    type: object
-                    properties:
-                      enable_cast:
-                        type: boolean
-                      downloads:
-                        type: object
-                        properties:
-                          limit_speed:
-                            type: boolean
-                          sleep_interval:
-                            type: integer
-                          autodelete_days:
-                            type: boolean
-                          format:
-                            type: string
-                          format_sort:
-                            type: boolean
-                          add_metadata:
-                            type: boolean
-                          add_thumbnail:
-                            type: boolean
-                          subtitle:
-                            type: boolean
-                          subtitle_source:
-                            type: boolean
-                          subtitle_index:
-                            type: boolean
-                          comment_max:
-                            type: boolean
-                          comment_sort:
-                            type: string
-                          cookie_import:
-                            type: boolean
-                          throttledratelimit:
-                            type: boolean
-                          extractor_lang:
-                            type: boolean
-                          integrate_ryd:
-                            type: boolean
-                          integrate_sponsorblock:
-                            type: boolean
+                      $ref: "#/components/schemas/Video"
                   paginate:
-                    type: object
-                    properties:
-                      page_size:
-                        type: integer
-                      page_from:
-                        type: integer
-                      prev_pages:
-                        type: boolean
-                      current_page:
-                        type: integer
-                      max_hits:
-                        type: boolean
-                      params:
-                        type: string
-                      last_page:
-                        type: boolean
-                      next_pages:
-                        type: array
-                        items:
-                          type: string
-                      total_hits:
-                        type: integer
-        "400":
-          description: Bad request due to invalid parameters.
+                    $ref: "#/components/schemas/Pagination"
+        "404":
+          description: No videos found.
+
+  /api/video/{video_id}/:
+    get:
+      summary: Retrieve metadata for a single video
+      operationId: getVideo
+      tags:
+        - Video
+      parameters:
+        - name: video_id
+          in: path
+          required: true
+          schema:
+            type: string
+      responses:
+        "200":
+          description: Video metadata retrieved successfully.
           content:
             application/json:
               schema:
-                type: object
-                properties:
-                  message:
-                    type: string
+                $ref: "#/components/schemas/Video"
+        "404":
+          description: Video not found.
+    delete:
+      summary: Delete a single video
+      operationId: deleteVideo
+      tags:
+        - Video
+      parameters:
+        - name: video_id
+          in: path
+          required: true
+          schema:
+            type: string
+      responses:
+        "200":
+          description: Video deleted successfully.
+        "404":
+          description: Video not found.
+
+  /api/video/{video_id}/progress/:
+    get:
+      summary: Get progress of a video for a user
+      operationId: getVideoProgress
+      tags:
+        - Video Progress
+      parameters:
+        - name: video_id
+          in: path
+          required: true
+          schema:
+            type: string
+      responses:
+        "200":
+          description: Video progress retrieved successfully.
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/VideoProgress"
+    post:
+      summary: Set progress of a video
+      operationId: setVideoProgress
+      tags:
+        - Video Progress
+      parameters:
+        - name: video_id
+          in: path
+          required: true
+          schema:
+            type: string
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/VideoProgressInput"
+      responses:
+        "200":
+          description: Video progress updated successfully.
+    delete:
+      summary: Reset video progress
+      operationId: resetVideoProgress
+      tags:
+        - Video Progress
+      parameters:
+        - name: video_id
+          in: path
+          required: true
+          schema:
+            type: string
+      responses:
+        "200":
+          description: Video progress reset successfully.
+
 security:
   - TokenAuth: []
 components:
@@ -154,3 +127,44 @@ components:
       type: apiKey
       in: header
       name: Authorization
+  schemas:
+    Video:
+      type: object
+      properties:
+        id:
+          type: string
+        title:
+          type: string
+        description:
+          type: string
+        url:
+          type: string
+        thumbnailUrl:
+          type: string
+        publishedAt:
+          type: string
+          format: date-time
+
+    VideoProgress:
+      type: object
+      properties:
+        youtube_id:
+          type: string
+        user_id:
+          type: integer
+        position:
+          type: integer
+
+    VideoProgressInput:
+      type: object
+      properties:
+        position:
+          type: integer
+
+    Pagination:
+      type: object
+      properties:
+        pageSize:
+          type: integer
+        pageFrom:
+          type: integer
