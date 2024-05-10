@@ -1,5 +1,5 @@
 {
-    "name": "frontend",
+    "name": "ta-kids-tube",
     "dockerComposeFile": "docker-compose.yml",
     "service": "frontend",
     "workspaceFolder": "/app",
