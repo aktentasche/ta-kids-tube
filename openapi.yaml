@@ -119,6 +119,136 @@ paths:
         "200":
           description: Video progress reset successfully.
 
+  /api/playlist/:
+    get:
+      summary: Retrieve a list of all playlists
+      operationId: listPlaylists
+      tags:
+        - Playlist
+      parameters:
+        - name: playlist_type
+          in: query
+          description: Filter playlists by type (regular or custom)
+          schema:
+            type: string
+      responses:
+        "200":
+          description: A list of playlists retrieved successfully.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  data:
+                    type: array
+                    items:
+                      $ref: "#/components/schemas/Playlist"
+                  paginate:
+                    $ref: "#/components/schemas/Pagination"
+        "400":
+          description: Invalid playlist type provided.
+        "404":
+          description: No playlists found.
+
+    post:
+      summary: Subscribe or unsubscribe from a list of playlists
+      operationId: updatePlaylistSubscriptions
+      tags:
+        - Playlist
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/PlaylistSubscriptionUpdate"
+      responses:
+        "200":
+          description: Playlist subscription status updated.
+        "400":
+          description: Missing or invalid request body.
+
+  /api/playlist/{playlist_id}/:
+    get:
+      summary: Retrieve metadata for a specific playlist
+      operationId: getPlaylist
+      tags:
+        - Playlist
+      parameters:
+        - name: playlist_id
+          in: path
+          required: true
+          schema:
+            type: string
+      responses:
+        "200":
+          description: Playlist metadata retrieved successfully.
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Playlist"
+        "404":
+          description: Playlist not found.
+
+    post:
+      summary: Modify a playlist (e.g., add or move videos)
+      operationId: modifyPlaylist
+      tags:
+        - Playlist
+      parameters:
+        - name: playlist_id
+          in: path
+          required: true
+          schema:
+            type: string
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/PlaylistModification"
+      responses:
+        "201":
+          description: Playlist modified successfully.
+        "400":
+          description: Invalid action or request body.
+
+    delete:
+      summary: Delete a specific playlist
+      operationId: deletePlaylist
+      tags:
+        - Playlist
+      parameters:
+        - name: playlist_id
+          in: path
+          required: true
+          schema:
+            type: string
+      responses:
+        "200":
+          description: Playlist deleted successfully.
+
+  /api/playlist/{playlist_id}/video/:
+    get:
+      summary: Retrieve all videos within a specific playlist
+      operationId: listPlaylistVideos
+      tags:
+        - Playlist
+      parameters:
+        - name: playlist_id
+          in: path
+          required: true
+          schema:
+            type: string
+      responses:
+        "200":
+          description: List of videos retrieved successfully.
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/Video"
+
 security:
   - TokenAuth: []
 components:
@@ -168,3 +298,40 @@ components:
           type: integer
         pageFrom:
           type: integer
+
+    Playlist:
+      type: object
+      properties:
+        id:
+          type: string
+        name:
+          type: string
+        description:
+          type: string
+        type:
+          type: string
+        videos:
+          type: array
+          items:
+            $ref: "#/components/schemas/Video"
+
+    PlaylistSubscriptionUpdate:
+      type: object
+      properties:
+        playlists:
+          type: array
+          items:
+            type: object
+            properties:
+              playlist_id:
+                type: string
+              subscribed:
+                type: boolean
+
+    PlaylistModification:
+      type: object
+      properties:
+        action:
+          type: string
+        video_id:
+          type: string
