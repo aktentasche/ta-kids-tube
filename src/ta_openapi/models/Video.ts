@@ -3,11 +3,13 @@
 /* tslint:disable */
 /* eslint-disable */
 export type Video = {
-    id?: string;
-    title?: string;
-    description?: string;
-    url?: string;
-    thumbnailUrl?: string;
-    publishedAt?: string;
+    data?: {
+        id?: string;
+        title?: string;
+        description?: string;
+        url?: string;
+        thumbnailUrl?: string;
+        publishedAt?: string;
+    };
 };
 

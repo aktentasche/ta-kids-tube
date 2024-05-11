@@ -296,19 +296,22 @@ components:
     Video:
       type: object
       properties:
-        id:
-          type: string
-        title:
-          type: string
-        description:
-          type: string
-        url:
-          type: string
-        thumbnailUrl:
-          type: string
-        publishedAt:
-          type: string
-          format: date-time
+        data:
+          type: object
+          properties:
+            id:
+              type: string
+            title:
+              type: string
+            description:
+              type: string
+            url:
+              type: string
+            thumbnailUrl:
+              type: string
+            publishedAt:
+              type: string
+              format: date-time
 
     VideoProgress:
       type: object
