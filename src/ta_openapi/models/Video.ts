@@ -4,12 +4,9 @@
 /* eslint-disable */
 export type Video = {
     data?: {
-        id?: string;
         title?: string;
-        description?: string;
-        url?: string;
-        thumbnailUrl?: string;
-        publishedAt?: string;
+        media_url?: string;
+        vid_thumb_url?: string;
     };
 };
 

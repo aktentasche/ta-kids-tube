@@ -299,19 +299,12 @@ components:
         data:
           type: object
           properties:
-            id:
-              type: string
             title:
               type: string
-            description:
+            media_url:
               type: string
-            url:
+            vid_thumb_url:
               type: string
-            thumbnailUrl:
-              type: string
-            publishedAt:
-              type: string
-              format: date-time
 
     VideoProgress:
       type: object
