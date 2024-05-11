@@ -249,21 +249,6 @@ paths:
                 items:
                   $ref: "#/components/schemas/Video"
 
-  /watched/:
-    post:
-      summary: Change watched state of video, channel, or playlist
-      requestBody:
-        required: true
-        content:
-          application/json:
-            schema:
-              $ref: "#/components/schemas/WatchedRequest"
-      responses:
-        "200":
-          description: Success message
-        "400":
-          description: Bad request
-
   /search/:
     get:
       summary: Run a search with the string in the query parameter
@@ -281,6 +266,21 @@ paths:
             application/json:
               schema:
                 $ref: "#/components/schemas/SearchResults"
+        "400":
+          description: Bad request
+
+  /watched/:
+    post:
+      summary: Change watched state of video, channel, or playlist
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/WatchedRequest"
+      responses:
+        "200":
+          description: Success message
         "400":
           description: Bad request
 
@@ -405,7 +405,7 @@ components:
           type: string
           description: The index of the video
         # Add more properties from the _process_video method here
-       title:
+        title:
           type: string
           description: The title of the video
         youtube_id:
@@ -482,3 +482,16 @@ components:
           type: string
           description: The thumbnail URL of the fulltext result
         # Add other properties as needed
+
+    WatchedRequest:
+      type: object
+      properties:
+        id:
+          type: string
+          description: The ID of the video, channel, or playlist
+        is_watched:
+          type: boolean
+          description: The new watched state (true/false)
+      required:
+        - id
+        - is_watched
