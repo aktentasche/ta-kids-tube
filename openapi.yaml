@@ -398,13 +398,16 @@ components:
           type: string
           description: The type of query performed
 
-      SearchResultVideo:
+    SearchResultVideo:
       type: object
       properties:
         _index:
           type: string
           description: The index of the video
         # Add more properties from the _process_video method here
+       title:
+          type: string
+          description: The title of the video
         youtube_id:
           type: string
           description: The YouTube ID of the video
