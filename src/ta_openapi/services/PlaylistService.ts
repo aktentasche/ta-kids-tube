@@ -2,82 +2,133 @@
 /* istanbul ignore file */
 /* tslint:disable */
 /* eslint-disable */
+import type { Pagination } from '../models/Pagination';
+import type { Playlist } from '../models/Playlist';
+import type { PlaylistModification } from '../models/PlaylistModification';
+import type { PlaylistSubscriptionUpdate } from '../models/PlaylistSubscriptionUpdate';
+import type { Video } from '../models/Video';
 import type { CancelablePromise } from '../core/CancelablePromise';
 import { OpenAPI } from '../core/OpenAPI';
 import { request as __request } from '../core/request';
 export class PlaylistService {
     /**
-     * Returns list of indexed playlists
-     * @param playlistType Type of playlist to filter by.
-     * @returns any Successfully retrieved list of playlists.
+     * Retrieve a list of all playlists
+     * @param playlistType Filter playlists by type (regular or custom)
+     * @returns any A list of playlists retrieved successfully.
      * @throws ApiError
      */
     public static listPlaylists(
-        playlistType?: 'regular' | 'custom',
+        playlistType?: string,
     ): CancelablePromise<{
-        data?: Array<{
-            playlist_id?: string;
-            playlist_name?: string;
-            playlist_description?: boolean;
-            playlist_active?: boolean;
-            playlist_channel?: string;
-            playlist_channel_id?: string;
-            playlist_subscribed?: boolean;
-            playlist_thumbnail?: string;
-            playlist_last_refresh?: string;
-            playlist_type?: string;
-            playlist_entries?: Array<{
-                youtube_id?: string;
-                title?: string;
-                uploader?: string;
-                idx?: number;
-                downloaded?: boolean;
-            }>;
-            _index?: string;
-            _score?: number;
-        }>;
-        config?: {
-            enable_cast?: boolean;
-            downloads?: {
-                limit_speed?: boolean;
-                sleep_interval?: number;
-                autodelete_days?: boolean;
-                format?: string;
-                format_sort?: boolean;
-                add_metadata?: boolean;
-                add_thumbnail?: boolean;
-                subtitle?: boolean;
-                subtitle_source?: boolean;
-                subtitle_index?: boolean;
-                comment_max?: boolean;
-                comment_sort?: string;
-                cookie_import?: boolean;
-                throttledratelimit?: boolean;
-                extractor_lang?: boolean;
-                integrate_ryd?: boolean;
-                integrate_sponsorblock?: boolean;
-            };
-        };
-        paginate?: {
-            page_size?: number;
-            page_from?: number;
-            prev_pages?: boolean;
-            current_page?: number;
-            max_hits?: boolean;
-            params?: string;
-            last_page?: boolean;
-            next_pages?: Array<string>;
-            total_hits?: number;
-        };
+        data?: Array<Playlist>;
+        paginate?: Pagination;
     }> {
         return __request(OpenAPI, {
             method: 'GET',
-            url: '/api/playlist/',
+            url: '/playlist/',
             query: {
                 'playlist_type': playlistType,
             },
             errors: {
-                400: `Bad request due to invalid parameters.`,
+                400: `Invalid playlist type provided.`,
+                404: `No playlists found.`,
+            },
+        });
+    }
+    /**
+     * Subscribe or unsubscribe from a list of playlists
+     * @param requestBody
+     * @returns any Playlist subscription status updated.
+     * @throws ApiError
+     */
+    public static updatePlaylistSubscriptions(
+        requestBody: PlaylistSubscriptionUpdate,
+    ): CancelablePromise<any> {
+        return __request(OpenAPI, {
+            method: 'POST',
+            url: '/playlist/',
+            body: requestBody,
+            mediaType: 'application/json',
+            errors: {
+                400: `Missing or invalid request body.`,
+            },
+        });
+    }
+    /**
+     * Retrieve metadata for a specific playlist
+     * @param playlistId
+     * @returns Playlist Playlist metadata retrieved successfully.
+     * @throws ApiError
+     */
+    public static getPlaylist(
+        playlistId: string,
+    ): CancelablePromise<Playlist> {
+        return __request(OpenAPI, {
+            method: 'GET',
+            url: '/playlist/{playlist_id}/',
+            path: {
+                'playlist_id': playlistId,
+            },
+            errors: {
+                404: `Playlist not found.`,
+            },
+        });
+    }
+    /**
+     * Modify a playlist (e.g., add or move videos)
+     * @param playlistId
+     * @param requestBody
+     * @returns any Playlist modified successfully.
+     * @throws ApiError
+     */
+    public static modifyPlaylist(
+        playlistId: string,
+        requestBody: PlaylistModification,
+    ): CancelablePromise<any> {
+        return __request(OpenAPI, {
+            method: 'POST',
+            url: '/playlist/{playlist_id}/',
+            path: {
+                'playlist_id': playlistId,
+            },
+            body: requestBody,
+            mediaType: 'application/json',
+            errors: {
+                400: `Invalid action or request body.`,
+            },
+        });
+    }
+    /**
+     * Delete a specific playlist
+     * @param playlistId
+     * @returns any Playlist deleted successfully.
+     * @throws ApiError
+     */
+    public static deletePlaylist(
+        playlistId: string,
+    ): CancelablePromise<any> {
+        return __request(OpenAPI, {
+            method: 'DELETE',
+            url: '/playlist/{playlist_id}/',
+            path: {
+                'playlist_id': playlistId,
+            },
+        });
+    }
+    /**
+     * Retrieve all videos within a specific playlist
+     * @param playlistId
+     * @returns Video List of videos retrieved successfully.
+     * @throws ApiError
+     */
+    public static listPlaylistVideos(
+        playlistId: string,
+    ): CancelablePromise<Array<Video>> {
+        return __request(OpenAPI, {
+            method: 'GET',
+            url: '/playlist/{playlist_id}/video/',
+            path: {
+                'playlist_id': playlistId,
             },
         });
     }
