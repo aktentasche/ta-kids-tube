@@ -24,7 +24,7 @@ const auth_header: Headers = {
 };
 
 export const OpenAPI: OpenAPIConfig = {
-  BASE: import.meta.env.VITE_TA_API_BASE_URL,
+  BASE: `${import.meta.env.VITE_TA_BASE_URL}/api`,
   VERSION: "0.4.7",
   WITH_CREDENTIALS: false,
   CREDENTIALS: "include",
