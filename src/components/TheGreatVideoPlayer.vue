@@ -9,23 +9,19 @@
 import { VideoPlayer } from "@videojs-player/vue";
 import "video.js/dist/video-js.css";
 
-// import { VideoService } from "@/ta_openapi";
 import { VideoService } from "@/ta_openapi/services/VideoService";
 
-import { ref, onMounted } from "vue";
+import { ref } from "vue";
 
 const props = defineProps<{
   ta_youtube_id: string;
 }>();
 
-onMounted(() => {
-  VideoService.getVideo(props.ta_youtube_id).then((r) =>
-    console.log(import.meta.env.VITE_TA_BASE_URL + r.data.media_url),
-  );
+VideoService.getVideo(props.ta_youtube_id).then(async (r) => {
+  video_src_url.value =
+    import.meta.env.VITE_TAKIDSTUBE_VIDEO_SERVER_URL + r.data?.media_url;
 });
 
 const video_src_url = ref("");
 const video_poster_url = ref("");
-
-console.log(props.ta_youtube_id);
 </script>
