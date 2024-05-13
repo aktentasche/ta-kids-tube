@@ -1,12 +1,13 @@
 <template>
   <v-container>
     TheGreatVideoPlayer
-    <video-player :src="video_src_url" :poster="video_poster_url" controls />
+    <!-- <video-player :src="video_src_url" :poster="video_poster_url" controls /> -->
+    <video ref="videoPlayer" class="video-js"></video>
   </v-container>
 </template>
 
 <script setup lang="ts">
-import { VideoPlayer } from "@videojs-player/vue";
+import videojs from "video.js";
 import "video.js/dist/video-js.css";
 
 import { VideoService } from "@/ta_openapi/services/VideoService";
